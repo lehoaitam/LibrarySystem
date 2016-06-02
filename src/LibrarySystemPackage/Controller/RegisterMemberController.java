@@ -9,7 +9,10 @@ import javafx.event.Event;
  */
 public class RegisterMemberController {
     public void handelCancelRegisterMember(Event event) {
-
+        //read from db sample
+        DataAcessFacade dataAcess = new DataAcessFacade();
+        LibraryMember member = dataAcess.readLibraryMember(3);
+        System.out.println(member.firstName);
     }
 
     public void handelRegisterMember(Event event) {
@@ -17,8 +20,6 @@ public class RegisterMemberController {
         LibraryMember member = new LibraryMember(3,"firstName", "lastName", "phoneNumber", "street", "city", "state", 52556, 2);
         DataAcessFacade dataAcess = new DataAcessFacade();
         dataAcess.saveLibraryMember(member);
-        //read from db sample
-        member = dataAcess.readLibraryMember(3);
-        System.out.println(member.firstName);
+
     }
 }
