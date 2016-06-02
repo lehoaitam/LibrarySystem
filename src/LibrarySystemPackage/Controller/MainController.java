@@ -39,7 +39,7 @@ public class MainController {
     public void handelCheckOutButtonAction(Event event) {
         //esaago code
         try {
-            //tam code
+            //Issac
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/Checkout.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
