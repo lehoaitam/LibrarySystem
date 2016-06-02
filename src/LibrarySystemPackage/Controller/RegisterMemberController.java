@@ -17,7 +17,7 @@ public class RegisterMemberController {
 
     public void handelRegisterMember(Event event) {
         //save to db sample code
-        LibraryMember member = new LibraryMember(3,"firstName", "lastName", "phoneNumber", "street", "city", "state", 52556, 2);
+        LibraryMember member = new LibraryMember(4,"firstName", "lastName", "phoneNumber", "street", "city", "state", 52556, 2);
         DataAcessFacade dataAcess = new DataAcessFacade();
         dataAcess.saveLibraryMember(member);
 
