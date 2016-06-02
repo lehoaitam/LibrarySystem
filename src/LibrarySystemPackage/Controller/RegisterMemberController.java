@@ -9,11 +9,16 @@ import javafx.event.Event;
  */
 public class RegisterMemberController {
     public void handelCancelRegisterMember(Event event) {
+
     }
 
     public void handelRegisterMember(Event event) {
+        //save to db sample code
         LibraryMember member = new LibraryMember(3,"firstName", "lastName", "phoneNumber", "street", "city", "state", 52556, 2);
         DataAcessFacade dataAcess = new DataAcessFacade();
         dataAcess.saveLibraryMember(member);
+        //read from db sample
+        member = dataAcess.readLibraryMember(3);
+        System.out.println(member.firstName);
     }
 }

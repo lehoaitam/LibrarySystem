@@ -20,8 +20,8 @@ public class DataAcessFacade implements IDataAcess {
             prep.setInt(1, member.memberId);
             prep.setString(2, member.firstName);
             prep.setString(3, member.lastName);
-            prep.setString(4, member.phoneNumber);
-            prep.setString(5, member.address.street);
+            prep.setString(4, member.phoneNumber);            prep.setString(5, member.address.street);
+
             prep.setString(6, member.address.city);
             prep.setString(7, member.address.state);
             prep.setInt(8, member.address.zipCode);
@@ -32,7 +32,7 @@ public class DataAcessFacade implements IDataAcess {
         }
         catch(SQLException e1)
         {
-            System.out.println("Error creating or running statement: " + e1.toString());
+            System.out.println("Error creating or running statement: " + e1.getMessage());
             try
             {
                 conn.close();
@@ -49,7 +49,7 @@ public class DataAcessFacade implements IDataAcess {
         LibraryMember result = null;
         try
         {
-            String sql = "SELECT * FROM LibraryMember WHERE memberId = 1";
+            String sql = "SELECT * FROM LibraryMember WHERE memberId = " + String.valueOf(id);
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -63,8 +63,6 @@ public class DataAcessFacade implements IDataAcess {
                 int zipcode = Integer.parseInt(res.getString("zipcode"));
                 int roleId = Integer.parseInt(res.getString("roleId"));
                 result = new LibraryMember(memberId,firstName,lastName,phoneNumber,street,city,state,zipcode,roleId);
-
-                System.out.println(lastName + "\n");
             }
             return result;
         }
