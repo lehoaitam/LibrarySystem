@@ -52,5 +52,6 @@ public class MainController {
 
     public void handleAddCopyBookButton(Event event) {
         //sang code
+        new AddABookCopyController().showView();
     }
 }
