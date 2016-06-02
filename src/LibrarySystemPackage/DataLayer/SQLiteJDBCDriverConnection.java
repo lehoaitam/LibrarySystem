@@ -13,7 +13,7 @@ public class SQLiteJDBCDriverConnection {
 
         try {
             // db parameters
-            String url = "jdbc:sqlite:C:/Users/985119/LibrarySystem";
+            String url = "jdbc:sqlite:C:/Users/985119/LibrarySystem.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
