@@ -14,7 +14,7 @@ public class MainController {
     public void handleRegisterMemberButtonAction(Event event) {
         try {
             //tam code
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/RegisterUser.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/RegisterMember.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Register User");
