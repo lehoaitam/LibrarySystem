@@ -4,10 +4,10 @@ package LibrarySystemPackage.Model;
  * Created by lehoaitam on 6/1/16.
  */
 public class Address {
-    private String street;
-    private String city;
-    private String state;
-    private int zipCode;
+    public String street;
+    public String city;
+    public String state;
+    public int zipCode;
     public Address(String street, String city, String state, int zipCode){
         this.street = street;
         this.city = city;
