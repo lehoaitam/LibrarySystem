@@ -1,4 +1,4 @@
-package LibrarySystemPackage;
+package LibrarySystemPackage.Controller;
 
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -6,11 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Controller {
+public class MainController {
+    public void handelLoginButtonAction(Event event) {
+        //dtakele code
+    }
+
     public void handleRegisterMemberButtonAction(Event event) {
         try {
             //tam code
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/RegisterUser.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/RegisterUser.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Register User");
@@ -19,10 +23,6 @@ public class Controller {
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void handelLoginButtonAction(Event event) {
-        //dtakele code
     }
 
     public void handelCheckOutButtonAction(Event event) {

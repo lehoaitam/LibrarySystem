@@ -1,4 +1,4 @@
-package LibrarySystemPackage;
+package LibrarySystemPackage.Model;
 
 import java.util.Date;
 
