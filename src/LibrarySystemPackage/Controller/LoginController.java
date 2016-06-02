@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /**
- * Created by lehoaitam on 6/1/16.
+ * Created by dtakele on 6/2/16.
  */
 public class LoginController {
 
