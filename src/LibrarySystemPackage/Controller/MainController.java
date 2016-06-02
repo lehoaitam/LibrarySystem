@@ -9,17 +9,16 @@ import javafx.stage.Stage;
 public class MainController {
     public void handelLoginButtonAction(Event event) {
         //dtakele code
-            try {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/Login.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setTitle("Login");
-        stage.setScene(new Scene(root1));
-        stage.show();
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/Login.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleRegisterMemberButtonAction(Event event) {
@@ -38,6 +37,17 @@ public class MainController {
 
     public void handelCheckOutButtonAction(Event event) {
         //esaago code
+        try {
+            //tam code
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/Checkout.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Check out");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleAddCopyBookButton(Event event) {
