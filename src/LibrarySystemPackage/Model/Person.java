@@ -6,10 +6,11 @@ import java.util.List;
  * Created by lehoaitam on 6/1/16.
  */
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private List<UserRole> listUserRole;
+    public String firstName;
+    public String lastName;
+    public String phoneNumber;
+    public Address address;
+    public List<UserRole> listUserRole;
     public Person(){
 
     }
