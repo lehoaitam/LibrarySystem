@@ -1,4 +1,4 @@
-package LibrarySystemPackage;
+package LibrarySystemPackage.DataLayer;
 
 import LibrarySystemPackage.Model.LibraryMember;
 
