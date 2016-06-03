@@ -3,24 +3,77 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" gridLinesVisible="true" hgap="0.0" prefHeight="139.0" prefWidth="323.999977929685" vgap="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="LibrarySystemPackage.Controller.MainController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="LibrarySystemPackage.Controller.AddABookCopyController">
   <children>
-    <Pane prefHeight="88.0" prefWidth="318.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <GridPane alignment="CENTER" gridLinesVisible="false" hgap="0.0" layoutX="15.0" layoutY="14.0" prefHeight="239.0" prefWidth="471.0" vgap="0.0">
+      <children>
+        <HBox alignment="CENTER_RIGHT" minHeight="71.0" prefHeight="71.0" prefWidth="466.0" style="" GridPane.columnIndex="0" GridPane.rowIndex="0">
+          <children>
+            <VBox prefHeight="63.0" prefWidth="528.0" spacing="5.0">
+              <children>
+                <Label text="Add Book Copy">
+                  <font>
+                    <Font name="System Bold" size="20.0" />
+                  </font>
+                </Label>
+                <Label text="       Adding a new book copy to an existing book">
+                  <font>
+                    <Font name="System Italic" size="13.0" />
+                  </font>
+                </Label>
+              </children>
+            </VBox>
+            <ImageView fitHeight="52.947265625" fitWidth="52.947265625" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../Images/add_book_copy.png" />
+              </image>
+            </ImageView>
+          </children>
+          <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+          </padding>
+        </HBox>
+        <Line endX="369.29290771484375" endY="-1.0000001192092896" startX="-100.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+          <children>
+            <Label text="ISBN" />
+            <TextField fx:id="txtISBN" prefWidth="200.0" text="abc" />
+            <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#btnSearchClicked" text="Search" />
+          </children>
+        </HBox>
+        <Label fx:id="lbAuthors" text="Authors" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+        <Label fx:id="lbISBN" text="ISBN" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Label fx:id="lbTitle" text="Title" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints />
+      </columnConstraints>
+      <padding>
+        <Insets />
+      </padding>
+      <rowConstraints>
+        <RowConstraints maxHeight="83.0" prefHeight="75.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="22.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="22.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="22.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="23.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="23.0" />
+        <RowConstraints maxHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="0.0" prefHeight="0.0" />
+      </rowConstraints>
+    </GridPane>
+    <HBox alignment="CENTER_RIGHT" layoutX="355.0" layoutY="286.0" prefHeight="27.0" prefWidth="130.0" spacing="10.0">
+      <children>
+        <Button fx:id="btnOk" mnemonicParsing="false" onAction="#btnOkClicked" prefWidth="42.0" text="Ok" />
+        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelClicked" text="Cancel" />
+      </children>
+    </HBox>
   </children>
-  <columnConstraints>
-    <ColumnConstraints />
-  </columnConstraints>
-  <padding>
-    <Insets />
-  </padding>
-  <rowConstraints>
-    <RowConstraints maxHeight="27.0" prefHeight="27.0" />
-    <RowConstraints maxHeight="27.0" prefHeight="27.0" />
-    <RowConstraints maxHeight="0.0" prefHeight="0.0" />
-    <RowConstraints maxHeight="0.0" prefHeight="0.0" />
-    <RowConstraints maxHeight="0.0" prefHeight="0.0" />
-  </rowConstraints>
-</GridPane>
+</AnchorPane>
