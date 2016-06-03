@@ -17,6 +17,10 @@ import LibrarySystemPackage.Model.UserRole;
  */
 public class DataAcessFacade implements IDataAcess {
     public boolean saveLibraryMember(LibraryMember member){
+        //if exist member
+        if(readLibraryMember(member.memberId) != null)
+            return false;
+        //insert new record
         boolean result = true;
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         try {
@@ -70,13 +74,6 @@ public class DataAcessFacade implements IDataAcess {
         catch(SQLException e1)
         {
             System.out.println("Error creating or running statement: " + e1.toString());
-            try
-            {
-                conn.close();
-            }
-            catch(Exception e2)
-            {
-            }
             return null;
         }
     }

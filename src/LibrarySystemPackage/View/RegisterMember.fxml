@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LibrarySystemPackage.Controller.RegisterMemberController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LibrarySystemPackage.Controller.RegisterMemberController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="116.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="116.0" />
@@ -23,10 +23,11 @@
       <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="60.0" valignment="TOP" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="memberId" prefHeight="27.0" prefWidth="86.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <TextField fx:id="memberId" prefHeight="27.0" prefWidth="86.0" style="-fx-border-color: red;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      </TextField>
       <Label text="First name:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="firstName" prefHeight="27.0" prefWidth="184.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Label text="Last name:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -41,7 +42,7 @@
       <Label text="State:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label text="Zip:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <Label text="Phone:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <GridPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+      <GridPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="TOP">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -50,8 +51,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="cancelRegisterMemberButton" mnemonicParsing="false" onMouseClicked="#handelCancelRegisterMember" text="Cancel" />
-            <Button fx:id="registerMemberButton" mnemonicParsing="false" onMouseClicked="#handelRegisterMember" text="Register" GridPane.columnIndex="1" />
+            <Button fx:id="cancelRegisterMemberButton" mnemonicParsing="false" onMouseClicked="#handelCancelRegisterMember" text="Cancel" GridPane.valignment="TOP" />
+            <Button fx:id="registerMemberButton" mnemonicParsing="false" onMouseClicked="#handelRegisterMember" text="Register" GridPane.columnIndex="1" GridPane.valignment="TOP" />
          </children>
       </GridPane>
       <Label fx:id="successLabel" prefHeight="23.0" prefWidth="331.0" text="add new member success." textFill="#19d332" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="9">

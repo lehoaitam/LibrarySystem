@@ -2,6 +2,8 @@ package LibrarySystemPackage.Controller;
 
 import LibrarySystemPackage.DataLayer.DataAcessFacade;
 import LibrarySystemPackage.Model.LibraryMember;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,24 +15,44 @@ import java.util.ResourceBundle;
 /**
  * Created by lehoaitam on 6/1/16.
  */
-public class RegisterMemberController {
+public class RegisterMemberController implements Initializable {
     @FXML
     private TextField memberId,firstName,lastName,street,city,state,phone,zip;
     @FXML
     private Label successLabel, failLabel;
-//    @Override
-//    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-//        assert memberId != null : "fx:id=\"memberTTV\" was not injected: check your FXML file 'Checkout.fxml'.";
-//        // initialize your logic here: all @FXML variables will have been injected
-//    }
+    @Override
+    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
+        memberId.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    memberId.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        zip.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    zip.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+    }
     public void handelCancelRegisterMember(Event event) {
         //read from db sample
         DataAcessFacade dataAcess = new DataAcessFacade();
         LibraryMember member = dataAcess.readLibraryMember(3);
         System.out.println(member.firstName);
     }
-    @FXML
     public void handelRegisterMember(Event event) {
+        if(memberId.getText().trim().equals("")) {
+            memberId.requestFocus();
+            return;
+        }
+
         //save to db sample code
         int memberIdValue = Integer.parseInt(memberId.getText());
         String firstNameValue = firstName.getText();
