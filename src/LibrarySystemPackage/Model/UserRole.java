@@ -6,8 +6,13 @@ package LibrarySystemPackage.Model;
 public class UserRole {
     private int roleId;
     private String roleName;
+    //private String userName;
     public UserRole(int roleId, String roleName){
         this.roleId = roleId;
         this.roleName = roleName;
+        //this.userName = userName;
     }
+    public String getRoleName(){return roleName;}
+    //public String getUserName(){return userName;}
+    public int getRoleId(){return roleId;}
 }

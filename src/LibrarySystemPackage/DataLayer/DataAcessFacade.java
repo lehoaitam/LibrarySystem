@@ -5,13 +5,23 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+
 import LibrarySystemPackage.Model.LibraryMember;
+import LibrarySystemPackage.Model.User;
+import LibrarySystemPackage.Model.UserRole;
 
 /**
  * Created by 985119 on 6/2/2016.
  */
 public class DataAcessFacade implements IDataAcess {
-    public void saveLibraryMember(LibraryMember member){
+    public boolean saveLibraryMember(LibraryMember member){
+        //if exist member
+        if(readLibraryMember(member.memberId) != null)
+            return false;
+        //insert new record
+        boolean result = true;
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         try {
             Statement stat = conn.createStatement();
@@ -32,15 +42,10 @@ public class DataAcessFacade implements IDataAcess {
         }
         catch(SQLException e1)
         {
+            result = false;
             System.out.println("Error creating or running statement: " + e1.getMessage());
-            try
-            {
-                conn.close();
-            }
-            catch(Exception e2)
-            {
-            }
         }
+        return result;
     }
     public LibraryMember readLibraryMember(int id){
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
@@ -65,6 +70,73 @@ public class DataAcessFacade implements IDataAcess {
                 result = new LibraryMember(memberId,firstName,lastName,phoneNumber,street,city,state,zipcode,roleId);
             }
             return result;
+        }
+        catch(SQLException e1)
+        {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            return null;
+        }
+    }
+
+    public User loginUser(String usrName, String password){
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        Statement stmt;
+        ResultSet res;
+        User user = null;
+        try
+        {
+            String sql = "SELECT * FROM User WHERE userName = '" + usrName + "'";
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(sql);
+            while (res.next()) {
+                String uName = res.getString("userName");
+                String pwrd = res.getString("password");
+                user = new User(uName,pwrd);
+                //int roleId = res.getInt("roleId");
+                //roleList.add(urole);
+
+                break;
+            }
+
+            if(user==null)
+                return null;
+String p=user.getPassword();
+            if(user.getPassword().equalsIgnoreCase(password)){
+                List<String> roleIds=new ArrayList<String>();
+                String sql3 = "SELECT * FROM User_UserRole WHERE userName = '" + usrName + "'";
+                stmt = conn.createStatement();
+                res = stmt.executeQuery(sql3);
+                while (res.next()) {
+                    String roleId = res.getString("roleId");
+
+                    roleIds.add(roleId);
+                }
+
+                if(!roleIds.isEmpty()) {
+
+                    List<UserRole> roleList = new ArrayList<UserRole>();
+                    String joinedRoleIds = String.join("','", roleIds);
+                    String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds +"'"+")";
+                    stmt = conn.createStatement();
+                    res = stmt.executeQuery(sql4);
+                    while (res.next()) {
+                        int roleId = res.getInt("roleId");
+                        String roleName = res.getString("roleName");
+                        //String uName = res.getString("userName");
+                        UserRole urole = new UserRole(roleId, roleName);
+
+                        roleList.add(urole);
+                    }
+
+                    if (!roleList.isEmpty())
+                        return new User(usrName, password, roleList);
+                }
+                return user;
+            }
+            else{
+                return null;
+        }
+
         }
         catch(SQLException e1)
         {

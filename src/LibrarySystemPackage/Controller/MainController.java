@@ -1,9 +1,11 @@
 package LibrarySystemPackage.Controller;
 
+import LibrarySystemPackage.Main;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainController {
@@ -27,7 +29,8 @@ public class MainController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/RegisterMember.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("Register User");
+            stage.setTitle("Add Member");
+            stage.getIcons().add(new Image(Main.class.getResourceAsStream("Images/books.png")));
             stage.setScene(new Scene(root1));
             stage.show();
         } catch(Exception e) {
@@ -52,5 +55,6 @@ public class MainController {
 
     public void handleAddCopyBookButton(Event event) {
         //sang code
+        new AddABookCopyController().showView();
     }
 }
