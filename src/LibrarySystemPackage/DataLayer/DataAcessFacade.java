@@ -119,9 +119,8 @@ String p=user.getPassword();
                     roleIds.add(roleId);
                 }
 
+                List<UserRole> roleList = new ArrayList<UserRole>();
                 if(!roleIds.isEmpty()) {
-
-                    List<UserRole> roleList = new ArrayList<UserRole>();
                     String joinedRoleIds = String.join("','", roleIds);
                     String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds +"'"+")";
                     stmt = conn.createStatement();
@@ -135,10 +134,8 @@ String p=user.getPassword();
                         roleList.add(urole);
                     }
 
-                    if (!roleList.isEmpty())
-                        return new User(usrName, password, roleList);
                 }
-                return user;
+                return new User(usrName, password, roleList);
             }
             else{
                 return null;
