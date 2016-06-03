@@ -1,10 +1,7 @@
 package LibrarySystemPackage.Controller;
 import java.net.URL;
+import java.sql.*;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import LibrarySystemPackage.Model.BookCopy;
@@ -20,10 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
+import java.time.LocalDate;
 
 import LibrarySystemPackage.DataLayer.SQLiteJDBCDriverConnection;
-
 import LibrarySystemPackage.Model.Book;
+import LibrarySystemPackage.Model.CheckOutRecord;
 
 /**
  * Created by Issac on 6/2/16.
@@ -77,8 +75,10 @@ public class CheckoutController implements Initializable {
                     break;
                 }
             }
-            if(!BookIsSelected)
+            if(!BookIsSelected) {
+                ((BookAvailable)selectedBook).selectedCopy = (BookCopy)bookCopiesList.getSelectionModel().getSelectedItem();
                 checkoutBookList.getItems().add(selectedBook);
+            }
         }
         catch(Exception E) {
             E.printStackTrace();
@@ -91,22 +91,78 @@ public class CheckoutController implements Initializable {
     }
     @FXML
     private void handleCheckOutAction() {
-        if(!searchMember.getSelection().equals(null) && !checkoutBookList.getItems().isEmpty()){
-
+        if(!(membersList.getSelectionModel().getSelectedItem()==null) && !checkoutBookList.getItems().isEmpty()){
+            saveCheckOut((LibraryMember)membersList.getSelectionModel().getSelectedItem(), checkoutBookList.getItems());
         }
+        else
+            System.out.println("Select a Member and books");
     }
+
+    public boolean saveCheckOut(LibraryMember lm, List<BookAvailable> borrowBooks){
+            Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+            try {
+                System.out.println("Start operation");
+                Statement stmt = conn.createStatement();
+                int checkoutId=12;
+                PreparedStatement prep = conn.prepareStatement("INSERT INTO Checkout values(?,?,?)");
+                prep.setInt(1, checkoutId);
+                prep.setInt(2, lm.memberId);
+                prep.setString(3, LocalDate.now().toString());
+                prep.executeUpdate();
+                for(BookAvailable book:borrowBooks) {
+                    saveCheckOutEntryDB(checkoutId,book);
+                }
+            }
+            catch(SQLException e1) {
+                System.out.println("Error creating or running statement: " + e1.toString());
+                try {
+                    conn.close();
+                    return false;
+                } catch (Exception e2) {
+                    e1.printStackTrace();
+                    return false;
+                }
+            }
+        return true;
+    }
+
+    public boolean saveCheckOutEntryDB(int checkoutId, BookAvailable borrowBook){
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        try {
+            System.out.println("Start operation");
+            Statement stmt = conn.createStatement();
+            PreparedStatement prep = conn.prepareStatement("INSERT INTO CheckoutEntry values(?,?,?,?)");
+            prep.setInt(1, checkoutId);
+            prep.setInt(2, Integer.parseInt(borrowBook.book.getZsbn()));
+            prep.setInt(3, borrowBook.selectedCopy.copyNumber);
+            prep.setInt(4,0);
+            prep.executeUpdate();
+        }
+        catch(SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+                return false;
+            } catch (Exception e2) {
+                e1.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert membersList != null : "fx:id=\"memberTTV\" was not injected: check your FXML file 'Checkout.fxml'.";
+        addBook.setDisable(true);
 
-        SQLiteJDBCDriverConnection.getInstance();
         membersList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LibraryMember>() {
             @Override
             public void changed(ObservableValue<? extends LibraryMember> observable, LibraryMember oldValue, LibraryMember newValue) {
                 if(newValue!=null)
-                    addBook.setDisable(true);
+                    memberName.setText(newValue.toString());
                 else
-                    addBook.setDisable(false);
+                    memberName.setText("");
             }
         });
 
@@ -114,9 +170,9 @@ public class CheckoutController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends BookCopy> observable, BookCopy oldValue, BookCopy newValue) {
                 if(newValue!=null)
-                    System.out.println(newValue.toString());
+                    addBook.setDisable(false);
                 else
-                    System.out.println("null");
+                    addBook.setDisable(true);
             }
         });
 
@@ -149,6 +205,11 @@ public class CheckoutController implements Initializable {
                                 e1.printStackTrace();
                             }
                         }
+                    }
+                    else {
+                        addBook.setDisable(true);
+                        bookSelected.setText("");
+                        bookCopiesList.getItems().clear();
                     }
                 }
             }
