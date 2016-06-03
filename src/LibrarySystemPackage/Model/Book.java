@@ -15,4 +15,12 @@ public class Book {
         this.zsbn = zsbn;
         this.maxCheckOutLength = maxCheckOutLength;
     }
+
+    @Override
+    public String toString(){
+        return "ISBN: " + zsbn + " Title:'" + title + "' ";
+    }
+    public String getZsbn(){
+        return zsbn;
+    }
 }

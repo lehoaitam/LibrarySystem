@@ -13,4 +13,9 @@ public class LibraryMember extends Person {
         this.address = new Address(street,city,state,zipcode);
     }
     private CheckOutRecord checkOutRecord;
+
+    @Override
+    public String toString(){
+        return memberId + ", " + firstName + " " + lastName + ", " + phoneNumber;
+    }
 }

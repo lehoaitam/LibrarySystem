@@ -5,7 +5,13 @@ package LibrarySystemPackage.Model;
  */
 public class BookCopy {
     private int copyNumber;
-    public BookCopy(int copyNumber){
+    private int zsbn;
+    public BookCopy(int copyNumber,int zsbn){
         this.copyNumber = copyNumber;
+        this.zsbn = zsbn;
+    }
+    @Override
+    public String toString(){
+        return "ISBN: " + zsbn + " Copy Number: " + copyNumber;
     }
 }
