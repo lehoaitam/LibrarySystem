@@ -16,7 +16,8 @@ import LibrarySystemPackage.Model.UserRole;
  * Created by 985119 on 6/2/2016.
  */
 public class DataAcessFacade implements IDataAcess {
-    public void saveLibraryMember(LibraryMember member){
+    public boolean saveLibraryMember(LibraryMember member){
+        boolean result = true;
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         try {
             Statement stat = conn.createStatement();
@@ -37,15 +38,10 @@ public class DataAcessFacade implements IDataAcess {
         }
         catch(SQLException e1)
         {
+            result = false;
             System.out.println("Error creating or running statement: " + e1.getMessage());
-            try
-            {
-                conn.close();
-            }
-            catch(Exception e2)
-            {
-            }
         }
+        return result;
     }
     public LibraryMember readLibraryMember(int id){
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
