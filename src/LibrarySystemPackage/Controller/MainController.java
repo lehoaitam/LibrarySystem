@@ -3,6 +3,7 @@ package LibrarySystemPackage.Controller;
 import LibrarySystemPackage.Main;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -48,6 +49,24 @@ public class MainController {
             stage.setTitle("Check out");
             stage.setScene(new Scene(root1));
             stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleLogoutAction(Event event) {
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("../View/Login.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setTitle("Library System - Login Page");
+            Scene scene = new Scene(parent, 400, 220);
+
+            stage.setScene(scene);
+            stage.sizeToScene();
+
+            stage.show();
+
         } catch(Exception e) {
             e.printStackTrace();
         }

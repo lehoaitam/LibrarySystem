@@ -23,11 +23,12 @@
             <Menu mnemonicParsing="false" style="-fx-cursor: default" text="Home" />
             <Menu mnemonicParsing="false" style="-fx-cursor: hand" text="Checkout">
               <items>
-                <MenuItem onAction="#handleCheckoutBookLinkAction" mnemonicParsing="false" text="Checkout Book" />
+                <MenuItem mnemonicParsing="false" onAction="#handleCheckoutBookLinkAction" text="Checkout Book" />
               </items>
             </Menu>
           </menus>
         </MenuBar>
+        <Button layoutX="469.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogoutAction" text="Logout" />
       </children>
     </Pane>
   </children>

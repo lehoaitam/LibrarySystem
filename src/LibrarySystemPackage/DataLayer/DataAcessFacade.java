@@ -16,9 +16,9 @@ import LibrarySystemPackage.Model.UserRole;
  * Created by 985119 on 6/2/2016.
  */
 public class DataAcessFacade implements IDataAcess {
-    public boolean saveLibraryMember(LibraryMember member){
+    public boolean saveLibraryMember(LibraryMember member) {
         //if exist member
-        if(readLibraryMember(member.memberId) != null)
+        if (readLibraryMember(member.memberId) != null)
             return false;
         //insert new record
         boolean result = true;
@@ -40,21 +40,19 @@ public class DataAcessFacade implements IDataAcess {
             conn.setAutoCommit(false);
             prep.executeUpdate();
             conn.setAutoCommit(true);
-        }
-        catch(SQLException e1)
-        {
+        } catch (SQLException e1) {
             result = false;
             System.out.println("Error creating or running statement: " + e1.getMessage());
         }
         return result;
     }
-    public LibraryMember readLibraryMember(int id){
+
+    public LibraryMember readLibraryMember(int id) {
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         Statement stmt;
         ResultSet res;
         LibraryMember result = null;
-        try
-        {
+        try {
             String sql = "SELECT * FROM LibraryMember WHERE memberId = " + String.valueOf(id);
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
@@ -68,24 +66,21 @@ public class DataAcessFacade implements IDataAcess {
                 String state = res.getString("state");
                 int zipcode = Integer.parseInt(res.getString("zipcode"));
                 int roleId = Integer.parseInt(res.getString("roleId"));
-                result = new LibraryMember(memberId,firstName,lastName,phoneNumber,street,city,state,zipcode,roleId);
+                result = new LibraryMember(memberId, firstName, lastName, phoneNumber, street, city, state, zipcode, roleId);
             }
             return result;
-        }
-        catch(SQLException e1)
-        {
+        } catch (SQLException e1) {
             System.out.println("Error creating or running statement: " + e1.toString());
             return null;
         }
     }
 
-    public User loginUser(String usrName, String password){
+    public User loginUser(String usrName, String password) {
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         Statement stmt;
         ResultSet res;
         User user = null;
-        try
-        {
+        try {
             //1. check if the user is available
             String sql = "SELECT * FROM User WHERE userName = '" + usrName + "'";
             stmt = conn.createStatement();
@@ -93,20 +88,21 @@ public class DataAcessFacade implements IDataAcess {
             while (res.next()) {
                 String uName = res.getString("userName");
                 String pwrd = res.getString("password");
-                user = new User(uName,pwrd);;
+                user = new User(uName, pwrd);
+                ;
 
                 break;
             }
 
-            if(user==null)
+            if (user == null)
                 return null; //returning null b/c user is not available
 
             //2. check if the password matches
-            if(user.getPassword().equalsIgnoreCase(password)){
+            if (user.getPassword().equalsIgnoreCase(password)) {
 
                 //3. get user roles
 
-                List<String> roleIds=new ArrayList<String>();
+                List<String> roleIds = new ArrayList<String>();
                 String sql3 = "SELECT * FROM User_UserRole WHERE userName = '" + usrName + "'";
                 stmt = conn.createStatement();
                 res = stmt.executeQuery(sql3);
@@ -117,9 +113,9 @@ public class DataAcessFacade implements IDataAcess {
                 }
 
                 List<UserRole> roleList = new ArrayList<UserRole>();
-                if(!roleIds.isEmpty()) {
+                if (!roleIds.isEmpty()) {
                     String joinedRoleIds = String.join("','", roleIds);
-                    String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds +"'"+")";
+                    String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds + "'" + ")";
                     stmt = conn.createStatement();
                     res = stmt.executeQuery(sql4);
                     while (res.next()) {
@@ -133,21 +129,15 @@ public class DataAcessFacade implements IDataAcess {
 
                 }
                 return new User(usrName, password, roleList);
-            }
-            else{
+            } else {
                 return null;  // returning null b/c password doesn't match
-        }
-
-        }
-        catch(SQLException e1)
-        {
-            System.out.println("Error creating or running statement: " + e1.toString());
-            try
-            {
-                conn.close();
             }
-            catch(Exception e2)
-            {
+
+        } catch (SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+            } catch (Exception e2) {
             }
             return null;
         }
