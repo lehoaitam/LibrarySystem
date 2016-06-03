@@ -88,7 +88,7 @@ public class DataAcessFacade implements IDataAcess {
         User user = null;
         try
         {
-            String sql = "SELECT * FROM User WHERE userName = " + usrName;
+            String sql = "SELECT * FROM User WHERE userName = '" + usrName + "'";
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -103,24 +103,37 @@ public class DataAcessFacade implements IDataAcess {
 
             if(user==null)
                 return null;
-
-            if(user.getPassword()==password){
-                List<UserRole> roleList=new ArrayList<UserRole>();
-                String sql2 = "SELECT * FROM UserRole WHERE userName = " + usrName;
+String p=user.getPassword();
+            if(user.getPassword().equalsIgnoreCase(password)){
+                List<String> roleIds=new ArrayList<String>();
+                String sql3 = "SELECT * FROM User_UserRole WHERE userName = '" + usrName + "'";
                 stmt = conn.createStatement();
-                res = stmt.executeQuery(sql);
+                res = stmt.executeQuery(sql3);
                 while (res.next()) {
-                    int roleId = res.getInt("roleId");
-                    String roleName = res.getString("roleName");
-                    String uName = res.getString("userName");
-                    UserRole urole = new UserRole(roleId,roleName,uName);
+                    String roleId = res.getString("roleId");
 
-                    roleList.add(urole);
+                    roleIds.add(roleId);
                 }
 
-                if(!roleList.isEmpty())
-                    return new User(usrName,password,roleList);
+                if(!roleIds.isEmpty()) {
 
+                    List<UserRole> roleList = new ArrayList<UserRole>();
+                    String joinedRoleIds = String.join("','", roleIds);
+                    String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds +"'"+")";
+                    stmt = conn.createStatement();
+                    res = stmt.executeQuery(sql4);
+                    while (res.next()) {
+                        int roleId = res.getInt("roleId");
+                        String roleName = res.getString("roleName");
+                        //String uName = res.getString("userName");
+                        UserRole urole = new UserRole(roleId, roleName);
+
+                        roleList.add(urole);
+                    }
+
+                    if (!roleList.isEmpty())
+                        return new User(usrName, password, roleList);
+                }
                 return user;
             }
             else{
