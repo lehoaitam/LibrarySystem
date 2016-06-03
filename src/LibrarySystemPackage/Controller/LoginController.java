@@ -62,7 +62,7 @@ public class LoginController {
                     stage.setTitle("Library System - No Role is identified");
                 }
                  //parent = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
-                Scene scene = new Scene(parent, 600, 375);
+                Scene scene = new Scene(parent, 600, 450);
 
                 stage.setScene(scene);
                 //stage.setTitle("new page");

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by 985261 on 6/2/2016.
  */
-public class User {
+public class User extends Person {
     String userName;
     String password;
     List<UserRole> roleList;
