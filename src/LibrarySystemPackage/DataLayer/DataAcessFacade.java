@@ -99,6 +99,8 @@ public class DataAcessFacade implements IDataAcess {
                 String uName = res.getString("userName");
                 String pwrd = res.getString("password");
                 user = new User(uName,pwrd);
+                //int roleId = res.getInt("roleId");
+                //roleList.add(urole);
 
                 break;
             }

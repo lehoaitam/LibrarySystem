@@ -13,7 +13,7 @@ public class SQLiteJDBCDriverConnection {
 
         try {
             // db parameters
-            String url = "jdbc:sqlite:F:MUM/AMUM/MPP/workspace/workshop/LibrarySystem.db";
+            //String url = "jdbc:sqlite:F:MUM/AMUM/MPP/workspace/workshop/LibrarySystem.db";
             String url = "jdbc:sqlite:data/LibrarySystem.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
