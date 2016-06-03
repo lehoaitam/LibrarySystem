@@ -30,7 +30,8 @@ public class DataAcessFacade implements IDataAcess {
             prep.setInt(1, member.memberId);
             prep.setString(2, member.firstName);
             prep.setString(3, member.lastName);
-            prep.setString(4, member.phoneNumber);            prep.setString(5, member.address.street);
+            prep.setString(4, member.phoneNumber);
+            prep.setString(5, member.address.street);
 
             prep.setString(6, member.address.city);
             prep.setString(7, member.address.state);
@@ -85,23 +86,26 @@ public class DataAcessFacade implements IDataAcess {
         User user = null;
         try
         {
+            //1. check if the user is available
             String sql = "SELECT * FROM User WHERE userName = '" + usrName + "'";
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
             while (res.next()) {
                 String uName = res.getString("userName");
                 String pwrd = res.getString("password");
-                user = new User(uName,pwrd);
-                //int roleId = res.getInt("roleId");
-                //roleList.add(urole);
+                user = new User(uName,pwrd);;
 
                 break;
             }
 
             if(user==null)
-                return null;
-String p=user.getPassword();
+                return null; //returning null b/c user is not available
+
+            //2. check if the password matches
             if(user.getPassword().equalsIgnoreCase(password)){
+
+                //3. get user roles
+
                 List<String> roleIds=new ArrayList<String>();
                 String sql3 = "SELECT * FROM User_UserRole WHERE userName = '" + usrName + "'";
                 stmt = conn.createStatement();
@@ -131,7 +135,7 @@ String p=user.getPassword();
                 return new User(usrName, password, roleList);
             }
             else{
-                return null;
+                return null;  // returning null b/c password doesn't match
         }
 
         }
