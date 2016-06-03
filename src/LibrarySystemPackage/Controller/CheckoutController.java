@@ -8,6 +8,7 @@ import LibrarySystemPackage.Model.BookCopy;
 import LibrarySystemPackage.Model.LibraryMember;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ComboBox;
@@ -28,13 +29,13 @@ import LibrarySystemPackage.Model.CheckOutRecord;
  */
 public class CheckoutController implements Initializable {
     @FXML
-    private Button addBook;
+    private Button addBook,closeWindow;
     @FXML
     private TextField searchMember,searchBook;//addBook;
     @FXML
     private ListView membersList,booksList,checkoutBookList;
     @FXML
-    private Label memberName,bookSelected;
+    private Label memberName,bookSelected,status;
     @FXML
     private ComboBox bookCopiesList;
 
@@ -90,28 +91,44 @@ public class CheckoutController implements Initializable {
         checkoutBookList.getItems().remove(selectedBook);
     }
     @FXML
+    private void handleCloseWindowAction() {
+        Stage stage = (Stage) closeWindow.getScene().getWindow();
+        stage.close();
+    }
+    @FXML
     private void handleCheckOutAction() {
         if(!(membersList.getSelectionModel().getSelectedItem()==null) && !checkoutBookList.getItems().isEmpty()){
-            saveCheckOut((LibraryMember)membersList.getSelectionModel().getSelectedItem(), checkoutBookList.getItems());
+            if(saveCheckOut((LibraryMember)membersList.getSelectionModel().getSelectedItem(), checkoutBookList.getItems())){
+                addBook.setDisable(true);
+                bookSelected.setText("");
+                bookCopiesList.getItems().clear();
+                booksList.getItems().clear();
+                membersList.getItems().clear();
+                checkoutBookList.getItems().clear();
+                status.setText("Checkout Successful");
+            }
+            else
+                status.setText("Unable to save");
         }
         else
-            System.out.println("Select a Member and books");
+            status.setText("Enter Member and Books");
     }
 
     public boolean saveCheckOut(LibraryMember lm, List<BookAvailable> borrowBooks){
             Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
             try {
-                System.out.println("Start operation");
                 Statement stmt = conn.createStatement();
-                int checkoutId=12;
+                ResultSet countRows = conn.createStatement().executeQuery("SELECT count(*) as counts From Checkout");
+                int checkoutId=0;
+                if(countRows.next())
+                    checkoutId=Integer.parseInt(countRows.getString("counts"))+1;
                 PreparedStatement prep = conn.prepareStatement("INSERT INTO Checkout values(?,?,?)");
                 prep.setInt(1, checkoutId);
                 prep.setInt(2, lm.memberId);
                 prep.setString(3, LocalDate.now().toString());
                 prep.executeUpdate();
-                for(BookAvailable book:borrowBooks) {
+                for(BookAvailable book:borrowBooks)
                     saveCheckOutEntryDB(checkoutId,book);
-                }
             }
             catch(SQLException e1) {
                 System.out.println("Error creating or running statement: " + e1.toString());
@@ -185,9 +202,9 @@ public class CheckoutController implements Initializable {
                         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
                         try {
                             Statement stmt = conn.createStatement();
-                            ResultSet availableCopies = stmt.executeQuery("select BookCopy.zsbn,BookCopy.ID from BookCopy  where BookCopy.zsbn=" + newValue.book.getZsbn()+" except select BookCopy.zsbn,BookCopy.ID from BookCopy  join CheckoutEntry on BookCopy.ID = CheckoutEntry.checkoutId where BookCopy.zsbn=" + newValue.book.getZsbn());
+                            ResultSet availableCopies = stmt.executeQuery("select BookCopy.zsbn,BookCopy.ID from BookCopy  where BookCopy.zsbn=" + newValue.book.getZsbn()+" except select BookCopy.zsbn,BookCopy.ID from BookCopy  join CheckoutEntry on BookCopy.ID = CheckoutEntry.bookCopyId where  CheckoutEntry.returned = 0 and BookCopy.zsbn=" + newValue.book.getZsbn());
                             ArrayList<BookCopy> bookCopies = null;
-                            if(availableCopies.next()){
+                            while(availableCopies.next()){
                                 if(bookCopies==null)
                                     bookCopies = new ArrayList<>();
                                 bookCopies.add(new BookCopy(Integer.parseInt(availableCopies.getString("BookCopy.ID")),Integer.parseInt(availableCopies.getString("BookCopy.zsbn"))));
