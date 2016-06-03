@@ -16,7 +16,12 @@ import LibrarySystemPackage.Model.UserRole;
  * Created by 985119 on 6/2/2016.
  */
 public class DataAcessFacade implements IDataAcess {
-    public void saveLibraryMember(LibraryMember member){
+    public boolean saveLibraryMember(LibraryMember member){
+        //if exist member
+        if(readLibraryMember(member.memberId) != null)
+            return false;
+        //insert new record
+        boolean result = true;
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
         try {
             Statement stat = conn.createStatement();
@@ -37,15 +42,10 @@ public class DataAcessFacade implements IDataAcess {
         }
         catch(SQLException e1)
         {
+            result = false;
             System.out.println("Error creating or running statement: " + e1.getMessage());
-            try
-            {
-                conn.close();
-            }
-            catch(Exception e2)
-            {
-            }
         }
+        return result;
     }
     public LibraryMember readLibraryMember(int id){
         Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
@@ -74,13 +74,6 @@ public class DataAcessFacade implements IDataAcess {
         catch(SQLException e1)
         {
             System.out.println("Error creating or running statement: " + e1.toString());
-            try
-            {
-                conn.close();
-            }
-            catch(Exception e2)
-            {
-            }
             return null;
         }
     }
@@ -92,7 +85,7 @@ public class DataAcessFacade implements IDataAcess {
         User user = null;
         try
         {
-            String sql = "SELECT * FROM User WHERE userName = " + usrName;
+            String sql = "SELECT * FROM User WHERE userName = '" + usrName + "'";
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -107,24 +100,37 @@ public class DataAcessFacade implements IDataAcess {
 
             if(user==null)
                 return null;
-
-            if(user.getPassword()==password){
-                List<UserRole> roleList=new ArrayList<UserRole>();
-                String sql2 = "SELECT * FROM UserRole WHERE userName = " + usrName;
+String p=user.getPassword();
+            if(user.getPassword().equalsIgnoreCase(password)){
+                List<String> roleIds=new ArrayList<String>();
+                String sql3 = "SELECT * FROM User_UserRole WHERE userName = '" + usrName + "'";
                 stmt = conn.createStatement();
-                res = stmt.executeQuery(sql);
+                res = stmt.executeQuery(sql3);
                 while (res.next()) {
-                    int roleId = res.getInt("roleId");
-                    String roleName = res.getString("roleName");
-                    String uName = res.getString("userName");
-                    UserRole urole = new UserRole(roleId,roleName,uName);
+                    String roleId = res.getString("roleId");
 
-                    roleList.add(urole);
+                    roleIds.add(roleId);
                 }
 
-                if(!roleList.isEmpty())
-                    return new User(usrName,password,roleList);
+                if(!roleIds.isEmpty()) {
 
+                    List<UserRole> roleList = new ArrayList<UserRole>();
+                    String joinedRoleIds = String.join("','", roleIds);
+                    String sql4 = "SELECT * FROM UserRole WHERE roleId IN ('" + joinedRoleIds +"'"+")";
+                    stmt = conn.createStatement();
+                    res = stmt.executeQuery(sql4);
+                    while (res.next()) {
+                        int roleId = res.getInt("roleId");
+                        String roleName = res.getString("roleName");
+                        //String uName = res.getString("userName");
+                        UserRole urole = new UserRole(roleId, roleName);
+
+                        roleList.add(urole);
+                    }
+
+                    if (!roleList.isEmpty())
+                        return new User(usrName, password, roleList);
+                }
                 return user;
             }
             else{
