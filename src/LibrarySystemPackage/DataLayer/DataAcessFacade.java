@@ -5,7 +5,12 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+
 import LibrarySystemPackage.Model.LibraryMember;
+import LibrarySystemPackage.Model.User;
+import LibrarySystemPackage.Model.UserRole;
 
 /**
  * Created by 985119 on 6/2/2016.
@@ -65,6 +70,65 @@ public class DataAcessFacade implements IDataAcess {
                 result = new LibraryMember(memberId,firstName,lastName,phoneNumber,street,city,state,zipcode,roleId);
             }
             return result;
+        }
+        catch(SQLException e1)
+        {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try
+            {
+                conn.close();
+            }
+            catch(Exception e2)
+            {
+            }
+            return null;
+        }
+    }
+
+    public User loginUser(String usrName, String password){
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        Statement stmt;
+        ResultSet res;
+        User user = null;
+        try
+        {
+            String sql = "SELECT * FROM User WHERE userName = " + usrName;
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(sql);
+            while (res.next()) {
+                String uName = res.getString("userName");
+                String pwrd = res.getString("password");
+                user = new User(uName,pwrd);
+
+                break;
+            }
+
+            if(user==null)
+                return null;
+
+            if(user.getPassword()==password){
+                List<UserRole> roleList=new ArrayList<UserRole>();
+                String sql2 = "SELECT * FROM UserRole WHERE userName = " + usrName;
+                stmt = conn.createStatement();
+                res = stmt.executeQuery(sql);
+                while (res.next()) {
+                    int roleId = res.getInt("roleId");
+                    String roleName = res.getString("roleName");
+                    String uName = res.getString("userName");
+                    UserRole urole = new UserRole(roleId,roleName,uName);
+
+                    roleList.add(urole);
+                }
+
+                if(!roleList.isEmpty())
+                    return new User(usrName,password,roleList);
+
+                return user;
+            }
+            else{
+                return null;
+        }
+
         }
         catch(SQLException e1)
         {

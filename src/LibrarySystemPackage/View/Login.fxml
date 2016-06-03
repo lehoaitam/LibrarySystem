@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.99997792968497" prefWidth="399.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="LibrarySystemPackage.Controller.LoginController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.99997792968497" prefWidth="399.9999000000025" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LibrarySystemPackage.Controller.LoginController">
   <children>
     <Label prefWidth="66.0" text="User Name:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
     <TextField fx:id="loginUserName" prefHeight="22.0" prefWidth="184.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-    <GridPane prefHeight="54.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+    <GridPane prefHeight="46.0" prefWidth="185.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
       <children>
-        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginUser" text="Sign In" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#handleLoginUser" prefHeight="25.0" prefWidth="62.0" text="Sign In" GridPane.columnIndex="1" GridPane.rowIndex="0" />
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="107.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="93.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="69.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="116.0" minWidth="10.0" prefWidth="116.0" />
       </columnConstraints>
       <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -23,18 +23,19 @@
     </GridPane>
     <Label prefWidth="57.0" text="Password:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
     <PasswordField fx:id="loginPWRD" prefWidth="184.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Label fx:id="lblErrorMsg" style="-fx-font-size: 12px" textFill="#f80808" GridPane.columnIndex="2" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="33.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="73.0" />
-    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="257.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="37.0" />
+    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="288.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="6.0" prefWidth="6.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="297.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="253.0" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="297.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
   </rowConstraints>
 </GridPane>
