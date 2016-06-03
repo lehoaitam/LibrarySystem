@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
@@ -28,7 +29,7 @@
             </Menu>
             <Menu mnemonicParsing="false" style="-fx-cursor: hand" text="Member">
               <items>
-                <MenuItem onAction="#handleRegisterMemberButtonAction" mnemonicParsing="false" text="Add Member" />
+                <MenuItem mnemonicParsing="false" onAction="#handleRegisterMemberButtonAction" text="Add Member" />
               </items>
             </Menu>
           </menus>
@@ -49,4 +50,7 @@
     <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
     <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
   </rowConstraints>
+  <stylesheets>
+    <URL value="@../StyleSheets/Login.css" />
+  </stylesheets>
 </GridPane>

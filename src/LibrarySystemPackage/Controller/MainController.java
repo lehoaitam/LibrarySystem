@@ -38,7 +38,7 @@ public class MainController {
         }
     }
 
-    public void handelCheckOutButtonAction(Event event) {
+    public void handleCheckoutBookLinkAction(Event event) {
         //esaago code
         try {
             //Issac

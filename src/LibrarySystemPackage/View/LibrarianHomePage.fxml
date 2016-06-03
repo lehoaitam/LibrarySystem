@@ -23,7 +23,7 @@
             <Menu mnemonicParsing="false" style="-fx-cursor: default" text="Home" />
             <Menu mnemonicParsing="false" style="-fx-cursor: hand" text="Checkout">
               <items>
-                <MenuItem onAction="#handelCheckOutButtonAction" mnemonicParsing="false" text="Checkout Book" />
+                <MenuItem onAction="#handleCheckoutBookLinkAction" mnemonicParsing="false" text="Checkout Book" />
               </items>
             </Menu>
           </menus>

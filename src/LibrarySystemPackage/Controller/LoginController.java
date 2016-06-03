@@ -49,6 +49,7 @@ public class LoginController {
                     String t=user.getRoleList().get(0).getRoleName();
                     if(user.getRoleList().get(0).getRoleName().equalsIgnoreCase("Administrator")) {
                         parent = FXMLLoader.load(getClass().getResource("../View/AdminHomePage.fxml"));
+
                         stage.setTitle("Library System - admin");
                     }
                     else//if(user.getRoleList().get(0).getRoleName().equalsIgnoreCase("Librarian"))
