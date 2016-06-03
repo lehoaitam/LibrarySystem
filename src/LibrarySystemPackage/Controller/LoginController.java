@@ -44,13 +44,14 @@ public class LoginController {
 
                     stage.setTitle("Library System - admin/lib roles");
                 }
-                else if(user.getRoleList().size()==1)//both admin or lib
+                else if(user.getRoleList().size()==1)// admin or lib
                 {
-                    if(user.getRoleList().get(0).getRoleName()=="Administrator") {
+                    String t=user.getRoleList().get(0).getRoleName();
+                    if(user.getRoleList().get(0).getRoleName().equalsIgnoreCase("Administrator")) {
                         parent = FXMLLoader.load(getClass().getResource("../View/AdminHomePage.fxml"));
                         stage.setTitle("Library System - admin");
                     }
-                    else//(user.getRoleList().get(0).getRoleName()=="Administrator")
+                    else//if(user.getRoleList().get(0).getRoleName().equalsIgnoreCase("Librarian"))
                         {
                         parent = FXMLLoader.load(getClass().getResource("../View/LibrarianHomePage.fxml"));
                         stage.setTitle("Library System - Librarian");
