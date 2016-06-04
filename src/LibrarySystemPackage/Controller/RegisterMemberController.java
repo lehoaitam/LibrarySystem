@@ -7,8 +7,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,6 +23,8 @@ public class RegisterMemberController implements Initializable {
     private TextField memberId,firstName,lastName,street,city,state,phone,zip;
     @FXML
     private Label successLabel, failLabel;
+    @FXML
+    private Button cancelRegisterMemberButton;
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 
@@ -42,10 +47,10 @@ public class RegisterMemberController implements Initializable {
         });
     }
     public void handelCancelRegisterMember(Event event) {
-        //read from db sample
-        DataAcessFacade dataAcess = new DataAcessFacade();
-        LibraryMember member = dataAcess.readLibraryMember(3);
-        System.out.println(member.firstName);
+        // get a handle to the stage
+        Stage stage = (Stage) cancelRegisterMemberButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
     public void handelRegisterMember(Event event) {
         if(memberId.getText().trim().equals("")) {
