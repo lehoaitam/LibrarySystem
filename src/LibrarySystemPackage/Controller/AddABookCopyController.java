@@ -1,11 +1,16 @@
 package LibrarySystemPackage.Controller;
 
 import LibrarySystemPackage.AbstractView;
+import LibrarySystemPackage.Model.Author;
 import LibrarySystemPackage.Model.Book;
+import LibrarySystemPackage.Model.BookCopy;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.stage.*;
+
+import java.util.Collections;
+import java.util.List;
 
 public class AddABookCopyController extends AbstractView {
 
@@ -24,6 +29,11 @@ public class AddABookCopyController extends AbstractView {
     @FXML
     private Label lbAuthors;
 
+    @FXML
+    private TextField txtCopyNumber;
+
+    private int isbn;
+
 
     /// Constructor of controller
     public AddABookCopyController() {
@@ -33,6 +43,15 @@ public class AddABookCopyController extends AbstractView {
 
         // path to fxml file
         this.viewPath = "../View/AddABookCopyView.fxml";
+    }
+
+    private int generateNewCopyNumber(String isbn)
+    {
+        List<Integer> copyNumber = this.dataAcessFacade.getBookCopiesOfBook(isbn);
+        if(copyNumber.isEmpty())
+            return  1;
+
+        return Collections.max(copyNumber) + 1;
     }
 
     /// handling click event on search button
@@ -45,6 +64,17 @@ public class AddABookCopyController extends AbstractView {
         if(book!=null) {
             lbISBN.setText("ISBN: " + book.getZsbn());
             lbTitle.setText("Title: " + book.getTitle());
+            this.isbn = Integer.parseInt(book.getZsbn());
+            List<Author> authors = this.dataAcessFacade.getAuthorsOfBook(txtISBN.getText());
+
+            String authorList = "";
+            for(Author a:authors)
+            {
+                authorList += a.getFirstName()+ " " + a.getLastName() + "; ";
+            }
+            lbAuthors.setText("Authors: "+ authorList);
+
+            txtCopyNumber.setText("" + generateNewCopyNumber(lbISBN.getText().substring(5)));
         }
         else
         {
@@ -60,7 +90,8 @@ public class AddABookCopyController extends AbstractView {
     /// handling click event on ok button
     public void btnOkClicked(){
 
-        // insert to database
+        int copyNumber = Integer.parseInt(txtCopyNumber.getText());
+        this.dataAcessFacade.addBookCopy(new BookCopy(copyNumber, isbn));
     }
 
     /// handling click event on cancel button

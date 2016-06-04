@@ -151,7 +151,7 @@ public class CheckoutController implements Initializable {
             PreparedStatement prep = conn.prepareStatement("INSERT INTO CheckoutEntry values(?,?,?,?)");
             prep.setInt(1, checkoutId);
             prep.setInt(2, Integer.parseInt(borrowBook.book.getZsbn()));
-            prep.setInt(3, borrowBook.selectedCopy.copyNumber);
+            prep.setInt(3, borrowBook.selectedCopy.getCopyNumber());
             prep.setInt(4,0);
             prep.executeUpdate();
         }
