@@ -1,11 +1,10 @@
 package LibrarySystemPackage;
 
+import LibrarySystemPackage.DataLayer.DataAcessFacade;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 /**
  * Created by 985259 on 6/2/2016.
@@ -13,6 +12,7 @@ import java.io.IOException;
 public abstract class AbstractView {
     protected String title;
     protected String viewPath;
+    protected DataAcessFacade dataAcessFacade;
     public void showView(){
         try
         {
@@ -25,5 +25,8 @@ public abstract class AbstractView {
         {
             ex.printStackTrace();
         }
+    }
+    public AbstractView(){
+        dataAcessFacade = new DataAcessFacade();
     }
 }

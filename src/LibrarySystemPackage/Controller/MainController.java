@@ -72,8 +72,13 @@ public class MainController {
         }
     }
 
-    public void handleAddCopyBookButton(Event event) {
-        //sang code
+    public void handleAddCopyBookButtonAction()
+    {
         new AddABookCopyController().showView();
+    }
+
+    public void handleAddBookButtonAction()
+    {
+        new AddABookController().showView();
     }
 }

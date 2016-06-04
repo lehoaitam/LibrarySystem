@@ -6,11 +6,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import LibrarySystemPackage.Model.LibraryMember;
-import LibrarySystemPackage.Model.User;
-import LibrarySystemPackage.Model.UserRole;
+import LibrarySystemPackage.Model.*;
 
 /**
  * Created by 985119 on 6/2/2016.
@@ -132,6 +132,173 @@ public class DataAcessFacade implements IDataAcess {
             } else {
                 return null;  // returning null b/c password doesn't match
             }
+
+        } catch (SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+            } catch (Exception e2) {
+            }
+            return null;
+        }
+    }
+
+    /*
+    * Author: Sang Tran
+    * Description: get book information by ISBN
+    * */
+    public Book getBook(String isbn)
+    {
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        Book book = null;
+        try {
+
+            String sql = "SELECT * FROM Book WHERE zsbn = '" + isbn + "'";
+            ResultSet res = conn.createStatement().executeQuery(sql);
+            while (res.next()) {
+                String zsbn = res.getString("zsbn");
+                String title = res.getString("title");
+                int maxCheckOutLength = res.getInt("maxCheckOutLength");
+                book = new Book(title,zsbn, maxCheckOutLength);
+                break;
+            }
+
+            return book;
+
+        } catch (SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+            } catch (Exception e2) {
+            }
+            return null;
+        }
+    }
+
+    /*
+    * Author: Sang Tran
+    * Description: insert a book to database
+    * */
+    public boolean addBook(Book book)
+    {
+        if (getBook(book.getZsbn()) == null) {
+
+            Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+            try {
+                PreparedStatement prep = conn.prepareStatement(
+                        "insert into Book values (?, ?, ?, ?);");
+                prep.setString(1, book.getZsbn());
+                //prep.setInt();
+                conn.setAutoCommit(false);
+                prep.executeUpdate();
+                conn.setAutoCommit(true);
+            } catch (SQLException e1) {
+                System.out.println("Error creating or running statement: " + e1.getMessage());
+                return  false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public BookCopy getBookCopy(int isbn, int copyNumber)
+    {
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        try {
+
+            String sql = "SELECT * FROM BookCopy WHERE zsbn = '" + isbn + "' and ID = '" + copyNumber + "'";
+            ResultSet res = conn.createStatement().executeQuery(sql);
+            if(res.next())
+                return new BookCopy(copyNumber,isbn);
+            else
+                return null;
+
+        } catch (SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+            } catch (Exception e2) {
+            }
+            return null;
+        }
+    }
+
+    /*
+    * Author: Sang Tran
+    * Description: insert a book copy to database
+    * */
+    public boolean addBookCopy(BookCopy bookCopy)
+    {
+        if (getBookCopy(bookCopy.getISBN(),bookCopy.getCopyNumber()) == null) {
+
+            Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+            try {
+                PreparedStatement prep = conn.prepareStatement(
+                        "insert into BookCopy values (?, ?);");
+                prep.setInt(1, bookCopy.getCopyNumber());
+                prep.setInt(2, bookCopy.getISBN());
+                conn.setAutoCommit(false);
+                prep.executeUpdate();
+                conn.setAutoCommit(true);
+            } catch (SQLException e1) {
+                System.out.println("Error creating or running statement: " + e1.getMessage());
+                return  false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+    * Author: Sang Tran
+    * Description: get list authors of a book
+    * */
+    public List<Author> getAuthorsOfBook(String isbn)
+    {
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        List<Author> authors = new ArrayList<Author>();
+        try {
+
+            String sql = "select a.* from bookauthor ba left join author a on ba.authorid = a.authorid where ba.bookid = '"+isbn+"'";
+            ResultSet res = conn.createStatement().executeQuery(sql);
+            while (res.next()) {
+                String firstName = res.getString("FirstName");
+                String lastName = res.getString("LastName");
+                authors.add(new Author(firstName, lastName,"",""));
+            }
+
+            return authors;
+
+        } catch (SQLException e1) {
+            System.out.println("Error creating or running statement: " + e1.toString());
+            try {
+                conn.close();
+            } catch (Exception e2) {
+            }
+            return null;
+        }
+    }
+
+    /*
+    * Author: Sang Tran
+    * Description: get list book copies of a book
+    * */
+    public List<Integer> getBookCopiesOfBook(String isbn)
+    {
+        Connection conn = SQLiteJDBCDriverConnection.getInstance().conn;
+        List<Integer> copiesNumberList = new ArrayList<Integer>();
+        try {
+
+            String sql = "select * from BookCopy where zsbn = '"+isbn+"'";
+            ResultSet res = conn.createStatement().executeQuery(sql);
+            while (res.next()) {
+                Integer copyNumber = res.getInt("ID");
+                copiesNumberList.add(copyNumber);
+            }
+
+            return copiesNumberList;
 
         } catch (SQLException e1) {
             System.out.println("Error creating or running statement: " + e1.toString());

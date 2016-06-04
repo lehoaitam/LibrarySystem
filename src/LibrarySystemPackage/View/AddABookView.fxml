@@ -8,20 +8,20 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LibrarySystemPackage.Controller.AddABookCopyController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LibrarySystemPackage.Controller.AddABookCopyController">
   <children>
-    <GridPane alignment="CENTER" gridLinesVisible="false" hgap="0.0" layoutX="15.0" layoutY="3.0" prefHeight="281.0" prefWidth="471.0" vgap="10.0">
+    <GridPane alignment="CENTER" gridLinesVisible="false" hgap="0.0" layoutX="15.0" layoutY="14.0" prefHeight="222.0" prefWidth="471.0" vgap="10.0">
       <children>
         <HBox alignment="CENTER_RIGHT" minHeight="71.0" prefHeight="71.0" prefWidth="466.0" style="" GridPane.columnIndex="0" GridPane.rowIndex="0">
           <children>
             <VBox prefHeight="63.0" prefWidth="528.0" spacing="5.0">
               <children>
-                <Label text="Add Book Copy">
+                <Label text="Add Book">
                   <font>
                     <Font name="System Bold" size="20.0" />
                   </font>
                 </Label>
-                <Label text="       Adding a new book copy to an existing book">
+                <Label text="       Adding a new book to library system">
                   <font>
                     <Font name="System Italic" size="13.0" />
                   </font>
@@ -30,7 +30,7 @@
             </VBox>
             <ImageView fitHeight="52.947265625" fitWidth="52.947265625" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@../Images/add_book_copy.png" />
+                <Image url="@../Images/add_book.png" />
               </image>
             </ImageView>
           </children>
@@ -39,20 +39,38 @@
           </padding>
         </HBox>
         <Line endX="369.29290771484375" endY="-1.0000001192092896" startX="-100.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="471.0" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
           <children>
-            <Label text="ISBN" />
-                  <TextField fx:id="txtISBN" />
-            <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#btnSearchClicked" text="Search" />
+            <Label prefHeight="16.0" prefWidth="113.0" text="ISBN" />
+            <TextField fx:id="txtISBN" prefWidth="200.0" />
           </children>
         </HBox>
-        <Label fx:id="lbAuthors" text="Authors" GridPane.rowIndex="8" />
-        <Label fx:id="lbISBN" text="ISBN" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-        <Label fx:id="lbTitle" text="Title" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="10">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="3">
                <children>
-                  <Label text="Copy Number" />
-            <TextField fx:id="txtCopyNumber" editable="false" prefHeight="26.0" prefWidth="104.0" />
+                  <Label prefHeight="16.0" prefWidth="113.0" text="Title" />
+                  <TextField fx:id="txtISBN1" prefHeight="26.0" prefWidth="199.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="471.0" spacing="5.0" GridPane.rowIndex="4">
+               <children>
+                  <Label prefHeight="16.0" prefWidth="112.0" text="Max Checkout" />
+                  <TextField fx:id="txtISBN11" prefHeight="26.0" prefWidth="200.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="471.0" spacing="5.0" GridPane.rowIndex="5">
+               <children>
+                  <Label prefHeight="16.0" prefWidth="112.0" text="Authors" />
+                  <VBox fx:id="vbAuthors" prefHeight="26.0" prefWidth="151.0">
+                     <children>
+                        <ComboBox fx:id="cmbAuthors" prefWidth="150.0" />
+                     </children></VBox>
+                  <Button mnemonicParsing="false" text="Add" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
+               <children>
+                  <Label prefHeight="16.0" prefWidth="121.0" />
+                  <Label text="Label" />
                </children>
             </HBox>
       </children>
@@ -65,15 +83,10 @@
       <rowConstraints>
         <RowConstraints maxHeight="83.0" prefHeight="75.0" />
         <RowConstraints maxHeight="30.0" prefHeight="22.0" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
         <RowConstraints maxHeight="30.0" prefHeight="22.0" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
         <RowConstraints maxHeight="30.0" prefHeight="22.0" />
         <RowConstraints maxHeight="30.0" prefHeight="23.0" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="30.0" prefHeight="23.0" />
         <RowConstraints maxHeight="30.0" prefHeight="23.0" />
         <RowConstraints maxHeight="0.0" prefHeight="0.0" />
         <RowConstraints maxHeight="0.0" prefHeight="0.0" />
@@ -81,7 +94,7 @@
             <RowConstraints maxHeight="0.0" prefHeight="0.0" />
       </rowConstraints>
     </GridPane>
-    <HBox alignment="CENTER_RIGHT" layoutX="356.0" layoutY="337.0" prefHeight="27.0" prefWidth="130.0" spacing="10.0">
+    <HBox alignment="CENTER_RIGHT" layoutX="355.0" layoutY="286.0" prefHeight="27.0" prefWidth="130.0" spacing="10.0">
       <children>
         <Button fx:id="btnOk" mnemonicParsing="false" onAction="#btnOkClicked" prefWidth="42.0" text="Ok" />
         <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelClicked" text="Cancel" />
