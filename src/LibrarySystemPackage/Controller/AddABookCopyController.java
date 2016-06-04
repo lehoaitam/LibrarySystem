@@ -90,8 +90,18 @@ public class AddABookCopyController extends AbstractView {
     /// handling click event on ok button
     public void btnOkClicked(){
 
+        //
+        this.dataAcessFacade.addBookCopy(new BookCopy(generateNewCopyNumber(isbn + ""), isbn));
+
+        // show inform dialog
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("Successfully");
+        alert.setContentText("Book copy has been created successfully");
+
+        alert.showAndWait();
         int copyNumber = Integer.parseInt(txtCopyNumber.getText());
-        this.dataAcessFacade.addBookCopy(new BookCopy(copyNumber, isbn));
+        txtCopyNumber.setText(copyNumber+1+"");
     }
 
     /// handling click event on cancel button
