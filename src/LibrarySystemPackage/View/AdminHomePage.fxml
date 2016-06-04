@@ -24,8 +24,8 @@
             <Menu mnemonicParsing="false" style="-fx-cursor: default" text="Home" />
             <Menu mnemonicParsing="false" style="-fx-cursor: hand" text="Book">
               <items>
-                <MenuItem mnemonicParsing="false" text="Add New Book" />
-                <MenuItem mnemonicParsing="false" onAction="#handleAddCopyBookButton" text="Add Book Copy" />
+                <MenuItem mnemonicParsing="false" onAction="#handleAddBookButtonAction" text="Add New Book" />
+                <MenuItem mnemonicParsing="false" onAction="#handleAddCopyBookButtonAction" text="Add Book Copy" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" style="-fx-cursor: hand" text="Member">
